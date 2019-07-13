@@ -1,0 +1,34 @@
+body {
+    background-color: aquamarine;
+}
+
+h1 {
+    text-align: center;
+    color: antiquewhite;
+}
+
+.bg-dark, .navbar-dark, .navbar {
+    background-color: #181126;
+}
+
+#canvas {
+    margin-top: 30px;
+    margin-left: 45px;
+    margin-bottom: 50px;
+    margin-right: 0px;
+}
+
+.game-bg {
+    background-color: #362C59;
+    height: 570px;
+}
+
+.canvas-bg {
+    background-color: #181126;
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-right: 130px;
+    height: 520px;
+    
+
+}
