@@ -100,4 +100,3 @@ platforms.push({
     height: 10
 });
 
-var platformTop = platforms[i].
