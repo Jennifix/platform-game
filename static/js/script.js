@@ -23,12 +23,15 @@ var player = {
     velY: 0,
 };
 
+var gravity = 1;
+
 function draw(x, y, width, height, color) {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     ctx.fillStyle = color;
     ctx.fillRect(x, y, width, height,);
     
 }
+
 
 function update() { 
     draw(player.x, player.y, player.width, player.height, "red");
@@ -40,7 +43,7 @@ function update() {
     
     window.addEventListener("keydown", downKey);
     window.addEventListener("keyup", upKey);
-    //Checking keys and adding movement to player
+    //Pressing key and adding movement to player
     function downKey(e){
         //right arrow
         if (e.keyCode == "39") {
@@ -50,7 +53,11 @@ function update() {
         }
         //up arrow 
         if (e.keyCode == "38") {
-
+            
+            if (player.velY > -2) {     
+                player.velY -= 0.1;
+                
+            }
         }
         //left arrow
         if (e.keyCode == "37") {
@@ -60,7 +67,7 @@ function update() {
         }
 
     }
-
+    //Releasing key
     function upKey(e) {
         //right arrow
         if (e.keyCode == "39"){
@@ -70,7 +77,7 @@ function update() {
         }
         //up arrow
         if (e.keyCode == "38") {
-
+            
         }
         //left arrow
         if (e.keyCode == "37") {
@@ -80,9 +87,20 @@ function update() {
         }
     }
     
+    player.velY += gravity;
+    player.y += player.velY;
+
+    if (player.y + player.height > platforms[i].y) {
+        player.y = platforms[i].y + player.height;
+    }
+    
     player.x += player.velX;
-        player.velX * 0.9;
-        
+    player.velX * 0.5;
+    
+    //grounded(player, platforms[i]);
+
+    
+
     requestAnimationFrame(update);
 }
 
