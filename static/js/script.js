@@ -1,5 +1,3 @@
-
-
 (function () {
     var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     window.requestAnimationFrame = requestAnimationFrame;
@@ -21,6 +19,7 @@ var player = {
     friction: 1,
     velX: 0,
     velY: 0,
+    jumping: true,
 };
 
 var gravity = 1;
@@ -28,40 +27,41 @@ var gravity = 1;
 function draw(x, y, width, height, color) {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     ctx.fillStyle = color;
-    ctx.fillRect(x, y, width, height,);
-    
+    ctx.fillRect(x, y, width, height, );
+
 }
 
 
-function update() { 
+function update() {
     draw(player.x, player.y, player.width, player.height, "red");
 
     for (var i = 0; i < platforms.length; i++) {
         ctx.fillStyle = "white";
-        ctx.fillRect(platforms[i].x, platforms[i].y, platforms[i].width, platforms[i].height,);
+        ctx.fillRect(platforms[i].x, platforms[i].y, platforms[i].width, platforms[i].height, );
     }
-    
+
     window.addEventListener("keydown", downKey);
     window.addEventListener("keyup", upKey);
     //Pressing key and adding movement to player
-    function downKey(e){
+    function downKey(e) {
         //right arrow
         if (e.keyCode == "39") {
-            if (player.velX < 5) { 
+            if (player.velX < 5) {
                 player.velX += 0.5;
             }
         }
         //up arrow 
         if (e.keyCode == "38") {
-            
-            if (player.velY > -2) {     
-                player.velY -= 0.1;
-                
+
+            if (!player.jumping) {
+                player.velY -= 0.5;
+                player.jumping = true;
+
             }
         }
         //left arrow
         if (e.keyCode == "37") {
-            if (player.velX > -5) { 
+            if (player.velX > -5) {
                 player.velX -= 0.5;
             }
         }
@@ -70,14 +70,14 @@ function update() {
     //Releasing key
     function upKey(e) {
         //right arrow
-        if (e.keyCode == "39"){
+        if (e.keyCode == "39") {
             if (player.velX > 0) {
                 player.velX -= 0.5;
             }
         }
         //up arrow
         if (e.keyCode == "38") {
-            
+
         }
         //left arrow
         if (e.keyCode == "37") {
@@ -86,23 +86,22 @@ function update() {
             }
         }
     }
-    
+
     player.velY += gravity;
     player.y += player.velY;
 
-    if (player.y + player.height > platforms[i].y) {
-        player.y = platforms[i].y + player.height;
-    }
-    
     player.x += player.velX;
     player.velX * 0.5;
-    
-    //grounded(player, platforms[i]);
 
-    
+    //grounded(player, platforms[i]);
+    if (player.y > canvasHeight - platforms[i].height - player.height) {
+        player.jumping = false;
+        player.y = canvasHeight - platforms[i].height - player.height;
+        player.velY = 0;
+    }
+
 
     requestAnimationFrame(update);
 }
 
 requestAnimationFrame(update);
-
