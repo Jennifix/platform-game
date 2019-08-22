@@ -87,18 +87,12 @@ function update() {
         }
     }
 
-    player.velY += gravity;
-    player.y += player.velY;
+   
 
     player.x += player.velX;
     player.velX * 0.5;
 
-    //grounded(player, platforms[i]);
-    if (player.y > canvasHeight - platforms[i].height - player.height) {
-        player.jumping = false;
-        player.y = canvasHeight - platforms[i].height - player.height;
-        player.velY = 0;
-    }
+    
 
 
     requestAnimationFrame(update);
